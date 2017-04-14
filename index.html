@@ -1,5 +1,49 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<script>
+function search(){
+	var searchtext=document.getElementById("searchvalue").value;
+	var textvalue=document.getElementById("art").innerHTML;
+	var article = new Array(100);
+	var cnt = 0;
+	console.log(textvalue);
+	textvalue.trim().split('\n').forEach(function(v) {
+  		article[cnt++] = v;
+	})
+	console.log(cnt);
+	console.log(article[0]);
+	if(searchtext.length==0){
+		return;
+	}
+	var pattern = "";
+	pattern += searchtext;
+	pattern += "*";
+	console.log(pattern);
+	var patt1=new RegExp(pattern);
+	var find = false;
+	while (cnt){
+		if (patt1.test(article[cnt-1])){
+			console.log(article[cnt-1]);
+			if (find)
+				document.getElementById("container").innerHTML+="<font color='black' size=24px>" + article[cnt-1].replaceAll(searchtext,"<font color='red' size=24px>"+searchtext+"</font>")+"</font>";
+			else{
+				find = true;
+				document.getElementById("container").innerHTML="<font color='black' size=24px>" + article[cnt-1].replaceAll(searchtext,"<font color='red' size=24px>"+searchtext+"</font>")+"</font>";
+			}
+		}
+		else{
+			console.log("fail");
+		}
+		--cnt;
+	}
+	if (!find)
+		document.getElementById("container").innerHTML="<font color='black' size=24px>没有找到结果</font>"
+	
+}
+String.prototype.replaceAll = function(s1,s2){  
+	return this.replace(new RegExp(s1,"gm"),s2);    
+}
+</script>
 <head>
 <title>首页实战</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -20,12 +64,12 @@
     				<li><a href="#">导航6</a></li>
     				<li><a href="#">导航7</a></li>
     			</ul>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<form method="get" action="#">
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<input type="submit" name="submit_button" value="" style="background:url(./images/btn.png); border-style:none; 
-				width:20px; height:20px; background-repeat:no-repeat;" /> 
-				<input type = text name="text"/>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<form>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<input type="button" name="submit_button" onclick="javascript:search()"value=""style="background:url(./images/btn.png); border-style:none; 
+				width:20px; height:20px; background-repeat:no-repeat;" />  
+				<input type="text" id="searchvalue"/>
 				</form>
     		</div>
     		<img src="./images/about_banner.jpg" alt="" id="banner" />
@@ -88,8 +132,8 @@
     					<a href="#">MORE&gt;&gt;</a>
     				</div>
     				<ul id="art">
-    					<li><a href="#">这是一篇好文章1</a></li>
-    					<li><a href="#">这是一篇好文章2</a></li>
+    					<li><a href="./article/article1.html">习近平会见林郑月娥_国内新闻_环球网</a></li>
+    					<li><a href="./article/article2.html">雄安新区筹委会成立10天</a></li>
     					<li><a href="#">这是一篇好文章3</a></li>
     					<li><a href="#">这是一篇好文章4</a></li>
     					<li><a href="#">这是一篇好文章5</a></li>
