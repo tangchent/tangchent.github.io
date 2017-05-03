@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<input type="text" id="searchvalue"/> 
+<input type="button" onclick="javascript:search()"value="搜索" />
+<div  cols="100" rows="10" id="textvalue" >
+123456789123456123456789qweqwwertyuiopasdfghjkklzxcvnm
+<ul id="art">
+	<li><a href="./article/article1.html">习近平会见林郑月娥_国内新闻_环球网</a></li>
+	<li><a href="./article/article2.html">雄安新区筹委会成立10天</a></li>
+	<li><a href="#">这是一篇好文章3</a></li>
+	<li><a href="#">这是一篇好文章4</a></li>
+	<li><a href="#">这是一篇好文章5</a></li>
+</ul>
+</div>
+
+<script>
+function search(){
+	var searchtext=document.getElementById("searchvalue").value;
+	var textvalue=document.getElementById("art").innerHTML;
+	var article = new Array(100);
+	var cnt = 0;
+	console.log(textvalue);
+	textvalue.trim().split('\n').forEach(function(v) {
+  		article[cnt++] = v;
+	})
+	console.log(cnt);
+	console.log(article[0]);
+	if(searchtext.length==0){
+		return;
+	}
+	var pattern = "";
+	pattern += searchtext;
+	pattern += "*";
+	console.log(pattern);
+	var patt1=new RegExp(pattern);
+	while (cnt){
+		if (patt1.test(article[cnt-1])){
+			console.log(article[cnt-1]);
+			document.innerHTML=article[cnt-1].replaceAll(searchtext,"<font color='red'>"+searchtext+"</font>");
+		}
+		else{
+			console.log("fail");
+		}
+		--cnt;
+	}
+	
+	
+}
+String.prototype.replaceAll = function(s1,s2){  
+	return this.replace(new RegExp(s1,"gm"),s2);    
+}
+</script>
+
+</body>
+</html>
